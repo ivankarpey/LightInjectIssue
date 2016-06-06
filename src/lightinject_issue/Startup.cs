@@ -22,23 +22,31 @@ namespace lightinject_issue
         { }
     }
 
+    public interface IInt { };
+
+    public class IntImpl : IInt
+    {
+    }
+
     [Route("/1")]
     public class TestController : Controller
     {
-        private MyContext _ctx;
-
-        public TestController(MyContext ctx)
-        {
-            _ctx = ctx;
-        }
+        public IInt MyInt { get; set; }
+        protected IInt MyProtectedInt { get; set; }
+//        private MyContext _ctx;
+//
+//        public TestController(MyContext ctx)
+//        {
+//            _ctx = ctx;
+//        }
 
         public async Task<JsonResult> Index()
         {
-            if (_ctx != null)
+            if (MyInt != null)
             {
                 return Json("success");
             }
-            throw new Exception();
+            throw new NullReferenceException();
         }
     }
 
