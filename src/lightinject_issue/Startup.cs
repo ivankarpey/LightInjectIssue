@@ -28,8 +28,13 @@ namespace lightinject_issue
     {
     }
 
+    public class BaseController : Controller
+    {
+        public IInt BaseImpl { get; set; }
+    }
+
     [Route("/1")]
-    public class TestController : Controller
+    public class TestController : BaseController
     {
         public IInt MyInt { get; set; }
         protected IInt MyProtectedInt { get; set; }
@@ -42,7 +47,7 @@ namespace lightinject_issue
 
         public async Task<JsonResult> Index()
         {
-            if (MyInt != null)
+            if (MyInt != null && MyProtectedInt != null && BaseImpl != null)
             {
                 return Json("success");
             }
